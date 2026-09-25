@@ -1,5 +1,6 @@
 package com.example.workoutapp.model;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nazwa ćwiczenia nie może być pusta!")
     private String name;
 
     @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)

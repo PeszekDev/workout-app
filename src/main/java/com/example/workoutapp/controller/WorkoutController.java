@@ -4,6 +4,7 @@ import com.example.workoutapp.model.WorkoutSet;
 import com.example.workoutapp.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class WorkoutController {
     }
 
     @PostMapping(path = "{exerciseId}")
-    public void registerNewWorkoutSet(@PathVariable("exerciseId") Long exerciseId, @RequestBody WorkoutSet workoutSet) {
+    public void registerNewWorkoutSet(@PathVariable("exerciseId") Long exerciseId,@Valid @RequestBody WorkoutSet workoutSet) {
         workoutService.addNewWorkoutSet(exerciseId, workoutSet);
     }
 

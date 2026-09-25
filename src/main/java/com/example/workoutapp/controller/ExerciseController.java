@@ -4,6 +4,7 @@ import com.example.workoutapp.model.Exercise;
 import com.example.workoutapp.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public void registerExercise(@RequestBody Exercise exercise) {
+    public void registerExercise(@Valid @RequestBody Exercise exercise) {
         exerciseService.addNewExercise(exercise);
     }
 

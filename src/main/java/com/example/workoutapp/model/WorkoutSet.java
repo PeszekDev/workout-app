@@ -3,6 +3,12 @@ package com.example.workoutapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
+
+
+
 
 @Entity
 @Table(name = "workout_set")
@@ -12,7 +18,13 @@ public class WorkoutSet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @NotNull(message = "Liczba powtórzeń jest wymagana!")
+    @Min(value = 1, message = "Liczba powtórzeń musi wynosić co najmniej 1!")
     private Integer reps;
+
+    @NotNull(message = "Ciężar jest wymagany!")
+    @Positive(message = "Ciężar musi być większy od zera!")
     private Double weight;
     private LocalDateTime date;
 
