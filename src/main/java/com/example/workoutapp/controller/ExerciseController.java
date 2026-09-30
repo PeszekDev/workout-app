@@ -1,4 +1,4 @@
-package com.example.workoutapp.controller; // lub w podpakiecie exercise
+package com.example.workoutapp.controller;
 
 import com.example.workoutapp.model.Exercise;
 import com.example.workoutapp.service.ExerciseService;
@@ -12,19 +12,17 @@ import java.util.List;
 @RequestMapping(path = "api/v1/exercises")
 public class ExerciseController {
 
-    private final ExerciseService exerciseService;
-
     @Autowired
-    public ExerciseController(ExerciseService exerciseService) {
-        this.exerciseService = exerciseService;
-    }
+    private ExerciseService exerciseService;
+
 
     @GetMapping
     public List<Exercise> getExercise() {
         return exerciseService.getAllExercise();
     }
 
-    @GetMapping(path = "{exerciseId}")
+    @GetMapping
+            (path = "{exerciseId}")
     public Exercise getExerciseById(@PathVariable("exerciseId") Long id) {
         return exerciseService.getExerciseById(id);
     }

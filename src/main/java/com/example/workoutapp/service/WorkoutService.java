@@ -58,6 +58,7 @@ public class WorkoutService {
         if (weight != null && weight >= 0 && !Objects.equals(workoutSet.getWeight(), weight)) {
             workoutSet.setWeight(weight);
         }
+        workoutSetRepository.save(workoutSet);
     }
 
 }
