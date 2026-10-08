@@ -1,5 +1,6 @@
 package com.example.workoutapp.service; // lub w podpakiecie exercise
 
+import com.example.workoutapp.dto.ExerciseDto;
 import com.example.workoutapp.model.Exercise;
 import com.example.workoutapp.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,22 @@ public class ExerciseService {
         this.exerciseRepository = exerciseRepository;
     }
 
-    public List<Exercise> getAllExercise() {
-        return exerciseRepository.findAll();
+    public List<ExerciseDto> getAllExercise() {
+        return exerciseRepository.findAll()
+                .stream()
+                .map(exercise -> new ExerciseDto(exercise.getId(),exercise.getName()))
+                .toList();
     }
 
-    public Exercise getExerciseById(Long id) {
+    public ExerciseDto getExerciseById(Long id) {
         return exerciseRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Ćwiczenie o id " + id + " nie znaleziono!"));
+                .map(exercise -> new ExerciseDto(exercise.getId(), exercise.getName()))
+                .orElseThrow(() -> new IllegalStateException("ćwiczenie o id " +id + " nie istnieje"));
     }
 
-    public Exercise addNewExercise(Exercise exercise) {
-        return exerciseRepository.save(exercise);
+    public void addNewExercise(ExerciseDto exerciseDto) {
+         Exercise exercise = new Exercise(exerciseDto.getName());
+         exerciseRepository.save(exercise);
     }
 
     public void deleteExercise(Long id) {

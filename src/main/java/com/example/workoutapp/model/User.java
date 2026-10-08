@@ -1,10 +1,7 @@
 package com.example.workoutapp.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +9,8 @@ import jdk.jfr.Name;
 
 import java.util.Objects;
 
+
+@Table(name = "users")
 @Entity
 public class User {
 
@@ -31,6 +30,11 @@ public class User {
     @NotBlank(message = "hasło nie może być puste!")
     private String password;
 
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 
     public User() {
     }

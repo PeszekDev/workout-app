@@ -1,5 +1,7 @@
 package com.example.workoutapp.service;
 
+import com.example.workoutapp.dto.ExerciseDto;
+import com.example.workoutapp.dto.WorkoutSetDto;
 import com.example.workoutapp.model.Exercise;
 import com.example.workoutapp.model.WorkoutSet;
 import com.example.workoutapp.repository.ExerciseRepository;
@@ -24,18 +26,21 @@ public class WorkoutService {
         this.exerciseRepository = exerciseRepository;
     }
 
-    public List<WorkoutSet> getWorkoutSets() {
-        return workoutSetRepository.findAll();
+    public List<WorkoutSetDto> getWorkoutSets() {
+        return workoutSetRepository.findAll()
+                .stream()
+                .map(workoutSet -> new WorkoutSetDto(workoutSet.getId(), workoutSet.getReps() , workoutSet.getWeight() , workoutSet.getDate() , workoutSet.getExercise().getId()))
+                .toList();
     }
 
-    public void addNewWorkoutSet(Long exerciseId, WorkoutSet workoutSet) {
+    public void addNewWorkoutSet(Long exerciseId, WorkoutSetDto workoutSetDto) {
         Exercise exercise = exerciseRepository.findById(exerciseId)
                 .orElseThrow(() -> new IllegalStateException("Cwiczenie o id " + exerciseId + " nie istnieje"));
-
-        workoutSet.setExercise(exercise);
-        if (workoutSet.getDate() == null) {
-            workoutSet.setDate(LocalDateTime.now());
-        }
+            WorkoutSet workoutSet = new WorkoutSet();
+            workoutSet.setReps(workoutSetDto.getReps());
+            workoutSet.setWeight(workoutSetDto.getWeight());
+            workoutSet.setDate(workoutSetDto.getDate() != null ? workoutSetDto.getDate() : LocalDateTime.now());
+            workoutSet.setExercise(exercise);
         workoutSetRepository.save(workoutSet);
     }
 

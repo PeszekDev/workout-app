@@ -1,5 +1,6 @@
 package com.example.workoutapp.controller;
 
+import com.example.workoutapp.dto.WorkoutSetDto;
 import com.example.workoutapp.model.WorkoutSet;
 import com.example.workoutapp.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ public class WorkoutController {
     }
 
     @GetMapping
-    public List<WorkoutSet> getWorkoutSets() {
+    public List<WorkoutSetDto> getWorkoutSets() {
         return workoutService.getWorkoutSets();
     }
 
     @PostMapping(path = "{exerciseId}")
-    public void registerNewWorkoutSet(@PathVariable("exerciseId") Long exerciseId,@Valid @RequestBody WorkoutSet workoutSet) {
-        workoutService.addNewWorkoutSet(exerciseId, workoutSet);
+    public void registerNewWorkoutSet(@PathVariable("exerciseId") Long exerciseId,@Valid @RequestBody WorkoutSetDto workoutSetDto) {
+        workoutService.addNewWorkoutSet(exerciseId, workoutSetDto);
     }
 
     @DeleteMapping(path = "{setId}")
@@ -34,7 +35,7 @@ public class WorkoutController {
         workoutService.deleteWorkoutSet(setId);
     }
     @PutMapping(path = "{setId}")
-    public void updateWorkoutSet(@PathVariable("setId") Long setId , Integer reps , Double weight) {
+    public void updateWorkoutSet(@PathVariable("setId") Long setId , @RequestParam(required = false) Integer reps , @RequestParam(required = false) Double weight) {
         workoutService.updateSetWorkout(setId , reps , weight);
     }
 

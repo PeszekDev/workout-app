@@ -1,5 +1,6 @@
 package com.example.workoutapp.controller;
 
+import com.example.workoutapp.dto.ExerciseDto;
 import com.example.workoutapp.model.Exercise;
 import com.example.workoutapp.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +18,19 @@ public class ExerciseController {
 
 
     @GetMapping
-    public List<Exercise> getExercise() {
+    public List<ExerciseDto> getExercise() {
         return exerciseService.getAllExercise();
     }
 
     @GetMapping
             (path = "{exerciseId}")
-    public Exercise getExerciseById(@PathVariable("exerciseId") Long id) {
+    public ExerciseDto getExerciseById(@PathVariable("exerciseId") Long id) {
         return exerciseService.getExerciseById(id);
     }
 
     @PostMapping
-    public void registerExercise(@Valid @RequestBody Exercise exercise) {
-        exerciseService.addNewExercise(exercise);
+    public void registerExercise(@Valid @RequestBody ExerciseDto exerciseDto) {
+        exerciseService.addNewExercise(new ExerciseDto());
     }
 
     @DeleteMapping(path = "{exerciseId}")
